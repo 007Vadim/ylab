@@ -1,14 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
-from tkinter import *
+#from tkinter import *
 from tkinter import messagebox
 import random
 root = Tk()
-root.title('Пинг-понг')
+root.title('Крестики-нолики')
 game = True
 field = []
 cross_count = 0
@@ -42,12 +36,11 @@ def game_over(player):
         messagebox.showinfo('Победитель', 'Победил комьютер')
     else:
         messagebox.showinfo('Победитель', 'Вы выиграли')
+
         
-        
-def check_lose(player):                                                         
-    horizontal(player)
-    vertical(player)
-    diagonal(player)
+def check_lose(player):
+    if horizontal(player) or vertical(player) or diagonal(player):
+        return
    
         
 def horizontal(player):
@@ -62,6 +55,7 @@ def horizontal(player):
                     for i in r:
                         i['background'] = 'pink'
                     game_over(player)
+                    return True
             else:
                 series = 0
                 r=[]
@@ -80,7 +74,8 @@ def vertical(player):
                 if series == 5:
                     for i in r:
                         i['background'] = 'pink'
-                    game_over(player)                
+                    game_over(player)
+                    return True
             else:
                 series = 0                
                 r=[]
@@ -115,6 +110,7 @@ def diagonal(player):
                         field[row + 3][col - 3]['background'] = 'pink' 
                         field[row + 4][col - 4]['background'] = 'pink'
                         game_over(player)
+                        return True
             except IndexError:
                 continue                
 
@@ -144,10 +140,5 @@ for row in range(10):
 new_button = Button(root, text='Новая игра', command=new_game)
 new_button.grid(row=11, column=0, columnspan=10, sticky='nsew')
 root.mainloop()
-
-
-# In[ ]:
-
-
 
 
